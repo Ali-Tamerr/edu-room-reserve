@@ -1,7 +1,6 @@
 
 import React from 'react';
 import RoomCard, { RoomStatus } from './RoomCard';
-import { cn } from '@/lib/utils';
 
 export interface Room {
   id: string;
@@ -18,14 +17,13 @@ interface RoomsListProps {
   title?: string;
   showHeader?: boolean;
   maxItems?: number;
-  className?: string;
 }
 
-const RoomsList = ({ rooms, title = 'Rooms', showHeader = true, maxItems, className }: RoomsListProps) => {
+const RoomsList = ({ rooms, title = 'Rooms', showHeader = true, maxItems }: RoomsListProps) => {
   const displayRooms = maxItems ? rooms.slice(0, maxItems) : rooms;
   
   return (
-    <div className={cn("space-y-4 w-full", className)}>
+    <div className="space-y-4 w-full">
       {showHeader && (
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">{title}</h2>
