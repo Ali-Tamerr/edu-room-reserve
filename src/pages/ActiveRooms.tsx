@@ -14,6 +14,7 @@ const ActiveRooms = () => {
       <RoomsList 
         rooms={activeRooms} 
         title="Current Active Lectures" 
+        className="border border-border rounded-lg"
       />
     </div>
   );
