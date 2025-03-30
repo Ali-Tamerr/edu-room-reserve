@@ -1,27 +1,63 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
+import { useState } from "react";
+
+// Pages
+import Dashboard from "./pages/Dashboard";
+import ActiveRooms from "./pages/ActiveRooms";
+import AllRooms from "./pages/AllRooms";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+
+// Layout
+import Layout from "./components/layout/Layout";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  // Mock user state - in a real app, this would come from an auth provider
+  const [user, setUser] = useState<{
+    name: string;
+    email: string;
+    imageUrl: string;
+  } | null>(null);
+
+  // Mock login functions
+  const handleLogin = () => {
+    setUser({
+      name: "Test User",
+      email: "user@example.com",
+      imageUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+    });
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout user={user} />}>
+              <Route index element={<Dashboard />} />
+              <Route path="active-rooms" element={<ActiveRooms />} />
+              <Route path="all-rooms" element={<AllRooms />} />
+              <Route path="profile" element={<Profile user={user} onLogin={handleLogin} onLogout={handleLogout} />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
