@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import { ThemeProvider } from "./components/theme/ThemeProvider";
 
 // Pages
 import Dashboard from "./pages/Dashboard";
@@ -40,23 +41,25 @@ const App = () => {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout user={user} />}>
-              <Route index element={<Dashboard />} />
-              <Route path="active-rooms" element={<ActiveRooms />} />
-              <Route path="all-rooms" element={<AllRooms />} />
-              <Route path="profile" element={<Profile user={user} onLogin={handleLogin} onLogout={handleLogout} />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout user={user} />}>
+                <Route index element={<Dashboard />} />
+                <Route path="active-rooms" element={<ActiveRooms />} />
+                <Route path="all-rooms" element={<AllRooms />} />
+                <Route path="profile" element={<Profile user={user} onLogin={handleLogin} onLogout={handleLogout} />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

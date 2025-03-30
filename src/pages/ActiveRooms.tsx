@@ -9,7 +9,7 @@ const ActiveRooms = () => {
   
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Active Rooms</h1>
+      <h1 className="text-2xl font-bold dark:text-white">Active Rooms</h1>
       
       <RoomsList 
         rooms={activeRooms} 
